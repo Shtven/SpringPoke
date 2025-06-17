@@ -43,8 +43,6 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
     @Value("${url.var}")
     private String urlFront;
 
-    private com.shtven.spring.security.postgresql.SpringBootSecurityPostgresqlApplication.security.jwt.AuthTokenFilter JwtFilter;
-
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
@@ -97,7 +95,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                         .requestMatchers("/api/comments/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(JwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
